@@ -1,2 +1,6 @@
 # weather
-Get summaries of weather data
+
+
+Explore Environment Canada weather station data on an interactive map
+
+Summarize data
