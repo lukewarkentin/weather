@@ -4,17 +4,28 @@ library(ggplot2)
 library(leaflet)
 library(lubridate)
 
-strwb_flats <- c(49.067047, -120.894262)
+#strwb_flats <- c(49.067047, -120.894262)
+terrace <- c(54.528726, -128.612961)
 
-stn <- stations_search(coords=strwb_flats, dist=35, interval="day" )
-
+#stn <- stations_search(coords=strwb_flats, dist=35, interval="day" )
+stn <- stations_search(coords=terrace, dist=100, interval="day" )
+  
 leaflet(stn) %>%
     addTiles() %>%
     addWMSTiles(baseUrl = "https://services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}.png",
                 layers = "1", options = WMSTileOptions(format = "image/png", transparent = TRUE)) %>%
     addMarkers(lng=stn$lon, lat=stn$lat, popup=paste0(stn$station_name," ",stn$elev,"m ", stn$start, "-", stn$end),
                popupOptions(closeButton = FALSE)) %>% 
-    addCircleMarkers(lng=strwb_flats[2], lat=strwb_flats[1], label="Trailhead", color='red')
+    addCircleMarkers(lng=terrace[2], lat=terrace[1], label="Terrace", color='red')
+
+# leaflet(stn) %>%
+#   addTiles() %>%
+#   addWMSTiles(baseUrl = "https://services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}.png",
+#               layers = "1", options = WMSTileOptions(format = "image/png", transparent = TRUE)) %>%
+#   addMarkers(lng=stn$lon, lat=stn$lat, popup=paste0(stn$station_name," ",stn$elev,"m ", stn$start, "-", stn$end),
+#              popupOptions(closeButton = FALSE)) %>% 
+#   addCircleMarkers(lng=strwb_flats[2], lat=strwb_flats[1], label="Trailhead", color='red')
+
 
 if(!dir.exists("data_out"))
   dir.create("data_out")
